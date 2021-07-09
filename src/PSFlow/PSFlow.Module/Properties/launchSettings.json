@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "PSFlow.Module": {
+      "commandName": "Executable",
+      "executablePath": "pwsh.exe",
+      "commandLineArgs": "-ExecutionPolicy Bypass -NoExit -File debug.ps1",
+      "workingDirectory": "C:\\Users\\RyanEphgrave\\OneDrive\\Code\\PSFlow\\src\\PSFlow\\PSFlow.Module"
+    }
+  }
+}
