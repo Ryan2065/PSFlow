@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PSFlow.Module.Flow
+namespace PSFlow
 {
-    class ImportPSFlow
+    public enum FlowInteractionMode
     {
+        Sql,
+        WebService
     }
 }

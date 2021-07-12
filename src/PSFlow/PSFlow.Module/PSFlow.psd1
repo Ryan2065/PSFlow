@@ -11,6 +11,6 @@
     PowerShellVersion = '7.0'
     AliasesToExport = @()
     #FunctionsToExport = 'PSConsoleHostReadLine'
-    CmdletsToExport = 'Initialize-PSFlow'
+    CmdletsToExport = 'Initialize-PSFlow', 'Start-PSFlowBlock', 'New-PSFlow', 'Get-PSFlow', 'Remove-PSFlow', 'Set-PSFlow'
     #HelpInfoURI = 'https://aka.ms/powershell71-help'
 }

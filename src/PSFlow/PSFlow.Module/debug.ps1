@@ -10,7 +10,24 @@ foreach($file in $files){
     }
 }
 
-Import-Module "$PSScriptRoot\bin\Debug\net5.0\win-x64\PSFlow.psd1"
+#Remove-Item "$PSScriptRoot\bin\SQLDb.sqlite" -Force
+
+$FlowTest = "$((Get-Item $PSScriptRoot).Parent.Parent.FullName)\Tests\_RunTests.ps1"
+Write-host $FlowTest
+
+. $FlowTest -ModulePath "$PSScriptRoot\bin\Debug\net5.0\win-x64\PSFlow.psd1"
+
+return 
 
 Initialize-PSFlow -SQLiteDb -ConnectionString "Data Source=$PSScriptRoot\bin\SQLDb.sqlite;" -SettingsStorage "EnvironmentVariable" -UpdateDatabase
 
+New-PSFlow -Name 'TestName' -Script {Write-host "Test"}
+New-PSFlow -Name 'TestName2' -Script {Write-host "Test"}
+
+Get-PSFlow
+
+Get-PSFlow -Name 'TestName'
+
+Remove-PSFlow -Name 'TestName'
+
+Get-PSFlow

@@ -21,7 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PSFlow.DB\PSFlow.DB.csproj" />
-    <ProjectReference Include="..\PSFlow.Settings\PSFlow.Settings.csproj" />
+    <ProjectReference Include="..\PSFlow.Service\PSFlow.Service.csproj" />
   </ItemGroup>
 
   <ItemGroup>

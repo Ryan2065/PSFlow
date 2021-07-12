@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PSFlow.DB", "PSFlow.DB\PSFlow.DB.csproj", "{E4E4A4CC-AB63-4F0F-A6BF-6565D517775D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PSFlow.Settings", "PSFlow.Settings\PSFlow.Settings.csproj", "{CABA785A-890D-4380-8593-328AE20E6E16}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PSFlow.Service", "PSFlow.Service\PSFlow.Service.csproj", "{CABA785A-890D-4380-8593-328AE20E6E16}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PSFlow.Module", "PSFlow.Module\PSFlow.Module.csproj", "{9CBC2CA6-BED6-4672-A6F9-094D1EEAD48B}"
 EndProject

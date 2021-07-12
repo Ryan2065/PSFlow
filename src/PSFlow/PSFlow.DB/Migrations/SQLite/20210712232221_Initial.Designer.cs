@@ -9,7 +9,7 @@ using PSFlow.DB;
 namespace PSFlow.DB.Migrations.SQLite
 {
     [DbContext(typeof(FlowContextSqlite))]
-    [Migration("20210708212326_Initial")]
+    [Migration("20210712232221_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,10 +18,13 @@ namespace PSFlow.DB.Migrations.SQLite
             modelBuilder
                 .HasAnnotation("ProductVersion", "5.0.7");
 
-            modelBuilder.Entity("PSFlow.DB.Models.Flow", b =>
+            modelBuilder.Entity("PSFlow.Models.Flow", b =>
                 {
                     b.Property<int>("FlowId")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("ActiveScriptId")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("Created")
@@ -29,6 +32,9 @@ namespace PSFlow.DB.Migrations.SQLite
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
                         .HasMaxLength(150)
@@ -45,21 +51,18 @@ namespace PSFlow.DB.Migrations.SQLite
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("VersionId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("FlowId");
+
+                    b.HasIndex("ActiveScriptId")
+                        .IsUnique();
 
                     b.ToTable("Flows");
                 });
 
-            modelBuilder.Entity("PSFlow.DB.Models.FlowVersion", b =>
+            modelBuilder.Entity("PSFlow.Models.FlowScript", b =>
                 {
-                    b.Property<int>("FlowVersionId")
+                    b.Property<int>("FlowScriptId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("CanRun")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("Created")
@@ -68,20 +71,23 @@ namespace PSFlow.DB.Migrations.SQLite
                     b.Property<string>("CreatedBy")
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("FlowId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Script")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("FlowVersionId");
+                    b.HasKey("FlowScriptId");
 
                     b.HasIndex("FlowId");
 
-                    b.ToTable("FlowVersions");
+                    b.ToTable("FlowScripts");
                 });
 
-            modelBuilder.Entity("PSFlow.DB.Models.Variable", b =>
+            modelBuilder.Entity("PSFlow.Models.Variable", b =>
                 {
                     b.Property<int>("VariableId")
                         .ValueGeneratedOnAdd()
@@ -104,10 +110,20 @@ namespace PSFlow.DB.Migrations.SQLite
                     b.ToTable("Variables");
                 });
 
-            modelBuilder.Entity("PSFlow.DB.Models.FlowVersion", b =>
+            modelBuilder.Entity("PSFlow.Models.Flow", b =>
                 {
-                    b.HasOne("PSFlow.DB.Models.Flow", "Flow")
-                        .WithMany("Versions")
+                    b.HasOne("PSFlow.Models.FlowScript", "ActiveScript")
+                        .WithOne()
+                        .HasForeignKey("PSFlow.Models.Flow", "ActiveScriptId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("ActiveScript");
+                });
+
+            modelBuilder.Entity("PSFlow.Models.FlowScript", b =>
+                {
+                    b.HasOne("PSFlow.Models.Flow", "Flow")
+                        .WithMany("Scripts")
                         .HasForeignKey("FlowId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -115,9 +131,9 @@ namespace PSFlow.DB.Migrations.SQLite
                     b.Navigation("Flow");
                 });
 
-            modelBuilder.Entity("PSFlow.DB.Models.Flow", b =>
+            modelBuilder.Entity("PSFlow.Models.Flow", b =>
                 {
-                    b.Navigation("Versions");
+                    b.Navigation("Scripts");
                 });
 #pragma warning restore 612, 618
         }

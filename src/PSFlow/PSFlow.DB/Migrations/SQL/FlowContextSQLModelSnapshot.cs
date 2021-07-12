@@ -19,18 +19,24 @@ namespace PSFlow.DB.Migrations.SQL
                 .HasAnnotation("ProductVersion", "5.0.7")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("PSFlow.DB.Models.Flow", b =>
+            modelBuilder.Entity("PSFlow.Models.Flow", b =>
                 {
                     b.Property<int>("FlowId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("ActiveScriptId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Description")
                         .HasMaxLength(150)
@@ -47,23 +53,21 @@ namespace PSFlow.DB.Migrations.SQL
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int?>("VersionId")
-                        .HasColumnType("int");
-
                     b.HasKey("FlowId");
+
+                    b.HasIndex("ActiveScriptId")
+                        .IsUnique()
+                        .HasFilter("[ActiveScriptId] IS NOT NULL");
 
                     b.ToTable("Flows");
                 });
 
-            modelBuilder.Entity("PSFlow.DB.Models.FlowVersion", b =>
+            modelBuilder.Entity("PSFlow.Models.FlowScript", b =>
                 {
-                    b.Property<int>("FlowVersionId")
+                    b.Property<int>("FlowScriptId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("CanRun")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
@@ -71,20 +75,23 @@ namespace PSFlow.DB.Migrations.SQL
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
+
                     b.Property<int>("FlowId")
                         .HasColumnType("int");
 
                     b.Property<string>("Script")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("FlowVersionId");
+                    b.HasKey("FlowScriptId");
 
                     b.HasIndex("FlowId");
 
-                    b.ToTable("FlowVersions");
+                    b.ToTable("FlowScripts");
                 });
 
-            modelBuilder.Entity("PSFlow.DB.Models.Variable", b =>
+            modelBuilder.Entity("PSFlow.Models.Variable", b =>
                 {
                     b.Property<int>("VariableId")
                         .ValueGeneratedOnAdd()
@@ -108,10 +115,20 @@ namespace PSFlow.DB.Migrations.SQL
                     b.ToTable("Variables");
                 });
 
-            modelBuilder.Entity("PSFlow.DB.Models.FlowVersion", b =>
+            modelBuilder.Entity("PSFlow.Models.Flow", b =>
                 {
-                    b.HasOne("PSFlow.DB.Models.Flow", "Flow")
-                        .WithMany("Versions")
+                    b.HasOne("PSFlow.Models.FlowScript", "ActiveScript")
+                        .WithOne()
+                        .HasForeignKey("PSFlow.Models.Flow", "ActiveScriptId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("ActiveScript");
+                });
+
+            modelBuilder.Entity("PSFlow.Models.FlowScript", b =>
+                {
+                    b.HasOne("PSFlow.Models.Flow", "Flow")
+                        .WithMany("Scripts")
                         .HasForeignKey("FlowId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -119,9 +136,9 @@ namespace PSFlow.DB.Migrations.SQL
                     b.Navigation("Flow");
                 });
 
-            modelBuilder.Entity("PSFlow.DB.Models.Flow", b =>
+            modelBuilder.Entity("PSFlow.Models.Flow", b =>
                 {
-                    b.Navigation("Versions");
+                    b.Navigation("Scripts");
                 });
 #pragma warning restore 612, 618
         }

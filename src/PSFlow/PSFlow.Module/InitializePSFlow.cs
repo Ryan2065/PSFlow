@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PSFlow.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,18 +48,18 @@ namespace PSFlow.Module
         }
         protected override void ProcessRecord()
         {
-            Settings.FlowSettings = _flowSettings;
+            FlowServiceManager.FlowSettings = _flowSettings;
             switch (SettingsStorage)
             {
                 case "EnvironmentVariable":
-                    Settings.SaveSettingsInEnvironment(_flowSettings);
+                    FlowServiceManager.SaveSettingsInEnvironment(_flowSettings);
                     break;
                 case "File":
                     if (String.IsNullOrEmpty(SettingsFilePath))
                     {
                         throw new ArgumentNullException("SettingsFilePath parameter required with File setting storage");
                     }
-                    Settings.SaveSettingsInFile(SettingsFilePath, _flowSettings);
+                    FlowServiceManager.SaveSettingsInFile(SettingsFilePath, _flowSettings);
                     break;
                 case "None":
                 default:
@@ -66,7 +67,7 @@ namespace PSFlow.Module
             }
             if (UpdateDatabase.IsPresent)
             {
-                var db = Settings.GetDbContext();
+                var db = FlowDbManager.GetDbContext();
                 db.Database.Migrate();
                 db.Dispose();
             }

@@ -1,10 +1,9 @@
 ﻿using System;
 using Newtonsoft.Json;
-using PSFlow.DB;
 
 namespace PSFlow
 {
-    public static class Settings
+    public static class FlowServiceManager
     {
         public static FlowSettings FlowSettings { get; set; }
         public static string PSFlowEnivronment
@@ -14,21 +13,9 @@ namespace PSFlow
                 return Environment.GetEnvironmentVariable("PSFlow_Environment");
             }
         }
-        public static FlowContext GetDbContext()
-        {
-            if(FlowSettings == null)
-            {
-                LoadSettings();
-            }
-            switch (FlowSettings.DbType)
-            {
-                case "SQLite":
-                    return new FlowContextSqlite(FlowSettings.ConnectionString);
-                case "SQL":
-                    return new FlowContextSQL(FlowSettings.ConnectionString);
-            }
-            throw new ApplicationException("Could not create the db context - Unexpected FlowSettings.DbType value");
-        }
+
+        public static FlowInteractionMode InteractionMode;
+
         public static void LoadSettings()
         {
             var settingsJson = Environment.GetEnvironmentVariable("PSFlow_Settings");

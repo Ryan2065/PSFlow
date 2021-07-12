@@ -6,13 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PSFlow.DB.Models
+namespace PSFlow.Models
 {
     public class Flow
     {
         public Flow()
         {
-            Versions = new HashSet<FlowVersion>();
+            Scripts = new HashSet<FlowScript>();
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -26,8 +26,12 @@ namespace PSFlow.DB.Models
         public DateTime Modified { get; set; }
         public string CreatedBy { get; set; }
         public string ModifiedBy { get; set; }
-        public int? VersionId { get; set; }
+        public int? ActiveScriptId { get; set; }
 
-        public ICollection<FlowVersion> Versions { get; set; }
+        public bool Deleted { get; set; }
+
+        public ICollection<FlowScript> Scripts { get; set; }
+        
+        public FlowScript ActiveScript { get; set; }
     }
 }
