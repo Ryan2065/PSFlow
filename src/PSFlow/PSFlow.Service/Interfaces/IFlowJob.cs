@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PSFlow.Module.Flow
+namespace PSFlow.Interfaces
 {
-    class RunPSFlow
+    public interface IFlowJob
     {
+        public void Start(int flowScriptId);
     }
 }

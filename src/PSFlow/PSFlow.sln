@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PSFlow.Service", "PSFlow.Se
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PSFlow.Module", "PSFlow.Module\PSFlow.Module.csproj", "{9CBC2CA6-BED6-4672-A6F9-094D1EEAD48B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSFlow.Job", "PSFlow.Job\PSFlow.Job.csproj", "{3B30CCA4-F748-47E8-8AE6-E9BA1CD466A0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{9CBC2CA6-BED6-4672-A6F9-094D1EEAD48B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CBC2CA6-BED6-4672-A6F9-094D1EEAD48B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CBC2CA6-BED6-4672-A6F9-094D1EEAD48B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B30CCA4-F748-47E8-8AE6-E9BA1CD466A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B30CCA4-F748-47E8-8AE6-E9BA1CD466A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B30CCA4-F748-47E8-8AE6-E9BA1CD466A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B30CCA4-F748-47E8-8AE6-E9BA1CD466A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

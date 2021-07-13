@@ -10,6 +10,10 @@ namespace PSFlow.Models
 {
     public class FlowScript
     {
+        public FlowScript()
+        {
+            Jobs = new HashSet<Job>();
+        }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int FlowScriptId { get; set; }
@@ -20,5 +24,6 @@ namespace PSFlow.Models
         public bool Deleted { get; set; }
 
         public Flow Flow { get; set; }
+        public ICollection<Job> Jobs { get; set; }
     }
 }
